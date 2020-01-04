@@ -2,7 +2,8 @@
 
 def Arrange(table, result, d):
     #ShowTable(table)
-
+    for i in range(1, len(table)):
+        result[str(1)+' '+str(i)] = table[1][i]
     ans = func(len(table)-1, d, table, result)
     result[str(len(table)-1)+' '+str(d)] = ans
     print(result.items())
@@ -14,18 +15,13 @@ def func(c, d, table, result):
     #d = 總共有的天數
     if str(c)+' '+str(d) in result:
         return result[str(c)+' '+str(d)]
-    if c == d:
-        temp = 0
-        for i in range(1, c + 1):
-            temp += table[i][1]
-        result[str(c)+' '+str(d)] = temp
-        return temp
-    elif d > c:
+    if d >= c:
         value = []
-        for i in range(1, d-c+1):
-            value.append(func(c, d-i, table, result) + table[c][i])
+        for i in range(1, d-c):
+            value.append(func(c-1, d-i, table, result) + table[c][i])
+        print(value)
         result[str(c)+' '+str(d)] = max(value)
-        return max(value)
+        return result[str(c)+' '+str(d)]
     else:
         print("illegal value with corse > days")
 def InitTable(table_str):
