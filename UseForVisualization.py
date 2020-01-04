@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 def Arrange(table, result, d):
+    result[str(1)+' '+str(1)] = table[1][1]
     ans = func(len(table)-1, d, table, result)
     print(result.items())
     print(ans)
@@ -11,15 +12,21 @@ def func(c, d, table, result):
     #d = 總共有的天數
     if str(c)+' '+str(d) in result:
         return result[str(c)+' '+str(d)]
-    if d > c:
+    if d > c and c != 0:
         value = []
         for i in range(1, d-(c-1)+1):
             value.append(func(c-1, d-i, table, result) + table[c][i])
         print(value)
         result[str(c)+' '+str(d)] = max(value)
         return result[str(c)+' '+str(d)]
+    elif d == c and c!= 0:
+        temp = 0
+        for i in range(1, c+1):
+            temp += table[i][1]
+        result[str(c)+' '+str(d)] = temp
+        return   result[str(c)+' '+str(d)]
     else:
-        print("illegal value with corse > days")
+        return 0
 
 def InitTable(table_str):
     table = []
@@ -41,20 +48,15 @@ def ShowTable(table):
             print(table[i][j], ' ', end='')
         print()
 
-line = "3 4 3 6"
 while True:
-    table_str = []
-    #儲存 Table
-    line = "6 6 4 7"
-    table_str.append(line.split())
-    line = "7 9 8 9"
-    table_str.append(line.split())
-    line = "8 11 9 10"
-    table_str.append(line.split())
-    table = InitTable(table_str)
+    #while 迴圈停在 '\n'
+    table = [[-100, -100, -100, -100, -100],[-100, 3, 6, 7, 8],[-100, 4, 6, 9, 11],[-100,3, 4, 8, 9],[-100,6, 7, 9, 10]]
     result = {}
-    line = "7"
     #利用給定的 days 計算答案
-    d = int(line)
-    Arrange(table, result, d)
-    break
+    line = '7'
+    while line.isdigit() != False:
+        d = int(line)
+        Arrange(table, result, d)
+        line = ''
+    if line == '':
+        break
