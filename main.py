@@ -1,14 +1,33 @@
 # -*- coding: utf-8 -*-
 
 def Arrange(table, result, d):
-    print("There are ", d, " days")
+    #ShowTable(table)
+
+    ans = func(len(table)-1, d, table, result)
+    result[str(len(table)-1)+' '+str(d)] = ans
+    print(result.items())
+    print(ans)
 
 
-def f(c, d, table, result):
+def func(c, d, table, result):
     #c = course 的數量
     #d = 總共有的天數
-    print()
-
+    if str(c)+' '+str(d) in result:
+        return result[str(c)+' '+str(d)]
+    if c == d:
+        temp = 0
+        for i in range(1, c + 1):
+            temp += table[i][1]
+        result[str(c)+' '+str(d)] = temp
+        return temp
+    elif d > c:
+        value = []
+        for i in range(1, d-c+1):
+            value.append(func(c, d-i, table, result) + table[c][i])
+        result[str(c)+' '+str(d)] = max(value)
+        return max(value)
+    else:
+        print("illegal value with corse > days")
 def InitTable(table_str):
     table = []
     # Course 數量 == len(table[0])
