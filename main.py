@@ -3,7 +3,7 @@
 def Arrange(table, result, d):
     result[str(1)+' '+str(1)] = table[1][1]
     ans = func(len(table)-1, d, table, result)
-    print(result.items())
+    #print(result.items())
     print(ans)
 
 
